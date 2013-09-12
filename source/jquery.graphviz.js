@@ -38,14 +38,20 @@
                 nodeTitle = arrow + nodeTitle;
             }
             var titles = $("g.edge title").filter(function (idx) {
-                return this.textContent.indexOf(nodeTitle) !== -1;
+                var compTitle;
+            	   if (io && io === "input") {
+            	  	    compTitle = this.textContent.substr(0, nodeTitle.length);
+            		  } else if (io && io === "output") {
+            			     compTitle = this.textContent.substr(this.textContent.length - nodeTitle.length);
+            		  }
+            		  return compTitle === nodeTitle;
             });
             return titles.parent();
         }
         function getEdge(nodeTitleSource, nodeTitleDestination) {
             var title = nodeTitleSource + arrow + nodeTitleDestination;
             var titles = $("g.edge title").filter(function (idx) {
-                return this.textContent.indexOf(title) !== -1;
+                return this.textContent.indexOf(title) === 0;
             });
             return titles.parent();
         }
